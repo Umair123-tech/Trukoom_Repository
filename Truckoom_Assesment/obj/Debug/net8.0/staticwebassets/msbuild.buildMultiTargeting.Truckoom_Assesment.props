@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Truckoom_Assesment.props" />
+</Project>

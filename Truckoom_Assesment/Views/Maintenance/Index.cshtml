@@ -1,0 +1,63 @@
+﻿@model Truckoom_Assesment.Models.MaintenanceActivity
+
+@{
+    ViewBag.Title = "Maintenance Activities";
+}
+
+<h2>Maintenance Activities</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Vehicle</th>
+            <th>Maintenance Type</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Notes</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Vehicle.LicensePlate</td>
+                <td>@item.MaintenanceType</td>
+                <td>@item.Date.ToShortDateString()</td>
+                <td>@item.Description</td>
+                <td>@item.Notes</td>
+                <td>
+                    <button class="deleteButton" data-id="@item.MaintenanceID">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".deleteButton").click(function () {
+            var id = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url: "/Maintenance/Delete/" + id,
+                success: function (response) {
+                    // Handle success
+                    alert("Maintenance activity deleted successfully!");
+                    location.reload();
+                },
+                error: function (response) {
+                    // Handle error
+                    alert("Error deleting maintenance activity.");
+                }
+            });
+        });
+    });
+</script>
